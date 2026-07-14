@@ -1,0 +1,24 @@
+{
+  "name": "smartflow",
+  "version": "1.0.0",
+  "description": "A backend automation RESTful API",
+  "license": "ISC",
+  "author": "Okeleye Ayomide and Okeleye Opeyemi",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.22.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
