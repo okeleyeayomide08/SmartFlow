@@ -15,6 +15,11 @@ const env = {
     secret: process.env.JWT_SECRET,
     expiresIn: process.env.JWT_EXPIRES_IN,
   },
+  resend: {
+    apiKey: process.env.RESEND_API_KEY,
+    senderEmail: process.env.RESEND_SENDER_EMAIL,
+    senderName: process.env.RESEND_SENDER_NAME,
+  },
 };
 
 export default env;

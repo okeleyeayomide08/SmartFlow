@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import env from "../config/env.js";
 import pool from "../config/db.js";
 import { sendSuccess, sendError } from "../helpers/response.helper.js";
+import { sendWelcomeEmail } from "../services/email.service.js";
 
 async function register(req, res, next) {
   try {
@@ -36,6 +37,8 @@ async function register(req, res, next) {
 
     // Extract the new user ID
     const newUserId = result.insertId;
+
+    await sendWelcomeEmail(email, name);
 
     return sendSuccess(
       res,
