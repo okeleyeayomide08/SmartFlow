@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 import env from "../config/env.js";
 import pool from "../config/db.js";
+import { sendSuccess, sendError } from "../helpers/response.helper.js";
 
 async function register(req, res, next) {
   try {
@@ -21,7 +22,7 @@ async function register(req, res, next) {
       email,
     ]);
     if (rows.length > 0) {
-      return res.status(409).json({ message: "Email already exists" });
+      return sendError(res, "Email already exists", 409);
     }
 
     // hash password
@@ -36,11 +37,12 @@ async function register(req, res, next) {
     // Extract the new user ID
     const newUserId = result.insertId;
 
-    return res.status(201).json({
-      status: "success",
-      message: `User created with Id ${newUserId}`,
-      userId: newUserId,
-    });
+    return sendSuccess(
+      res,
+      `User created successfully`,
+      { userId: newUserId },
+      201,
+    );
   } catch (error) {
     next(error);
   }
@@ -63,7 +65,7 @@ async function login(req, res, next) {
     const [rows] = await pool.query(query, [email]);
 
     if (rows.length === 0) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return sendError(res, "Invalid credentials", 401);
     }
 
     // get user details
@@ -73,7 +75,7 @@ async function login(req, res, next) {
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      return res.status(401).json({ message: "Invalid credentials" });
+      return sendError(res, "Invalid credentials", 401);
     }
 
     // JWT genration
@@ -83,10 +85,8 @@ async function login(req, res, next) {
       { expiresIn: env.jwt.expiresIn },
     );
 
-    return res.status(200).json({
-      status: "success",
-      message: `Login successful, Welcome back ${user.name}`,
-      token: token,
+    return sendSuccess(res, `Login successful, Welcome back ${user.name}`, {
+      token,
     });
   } catch (error) {
     next(error);
