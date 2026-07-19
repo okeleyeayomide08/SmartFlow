@@ -108,7 +108,7 @@ async function updateTeam(req, res, next) {
       }
     }
 
-    // 3. Fallback to existing values if fields are missing in req.body
+    // Fallback to existing values if fields are missing in req.body
     const updatedName = name ?? currentTeam.name;
     const updatedDescription = description ?? currentTeam.description;
 
