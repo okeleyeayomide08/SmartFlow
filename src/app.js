@@ -3,6 +3,7 @@ import authRouter from "./routes/auth.routes.js";
 import teamRouter from "./routes/team.routes.js";
 import userRouter from "./routes/user.routes.js";
 import projectRouter from "./routes/project.routes.js";
+import taskRouter from "./routes/task.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/teams", teamRouter);
 app.use("/api/users", userRouter);
 app.use("/api/projects", projectRouter);
+app.use("/api/tasks", taskRouter);
 
 // Check route workinng properly
 app.get("/", (req, res) => {
