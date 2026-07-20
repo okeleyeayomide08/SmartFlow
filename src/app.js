@@ -2,6 +2,7 @@ import express from "express";
 import authRouter from "./routes/auth.routes.js";
 import teamRouter from "./routes/team.routes.js";
 import userRouter from "./routes/user.routes.js";
+import projectRouter from "./routes/project.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/teams", teamRouter);
 app.use("/api/users", userRouter);
+app.use("/api/projects", projectRouter);
 
 // Check route workinng properly
 app.get("/", (req, res) => {
