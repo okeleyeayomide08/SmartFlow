@@ -5,6 +5,7 @@ import {
   sendTaskAssignedEmail,
   sendTaskCompletedEmail,
 } from "../services/email.service.js";
+import { runAutomationEngine } from "../engine/automation.engine.js";
 
 async function createTask(req, res, next) {
   try {
@@ -174,6 +175,15 @@ async function updateTaskStatus(req, res, next) {
     }
 
     await pool.query("UPDATE tasks SET status = ? WHERE id = ?", [status, id]);
+
+    await runAutomationEngine("task_status_changed", {
+      projectId: task.project_id,
+      taskId: task.id,
+      status: status,
+      assignedTo: task.assigned_to,
+      createdBy: task.created_by,
+      taskName: task.name,
+    });
 
     if (status === "completed") {
       const [managerRows] = await pool.query(
