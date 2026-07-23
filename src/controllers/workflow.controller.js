@@ -54,7 +54,7 @@ async function createWorkflow(req, res, next) {
         condition_operator,
         condition_value,
         action_type,
-        created_by,
+        createdBy,
       ],
     );
 
